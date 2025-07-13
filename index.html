@@ -10,29 +10,70 @@
       background-attachment: fixed;
       overflow: hidden;
     }
+
+    /* Floating Emojis */
     .emoji-bg {
       position: fixed;
       z-index: 0;
       font-size: 3rem;
-      opacity: 0.15;
+      opacity: 0.1;
       animation: float 20s linear infinite;
     }
+
     @keyframes float {
       0% { transform: translateY(0); }
       100% { transform: translateY(100vh); }
     }
-    .emoji {
-      animation: fall 3s linear infinite;
-      font-size: 2rem;
+
+    /* Soft Glow */
+    .glow-text {
+      text-shadow: 0 0 10px #ff80ab, 0 0 20px #ff4081;
     }
-    @keyframes fall {
-      0% { top: -50px; opacity: 1; }
-      100% { top: 100vh; opacity: 0; }
+
+    .glow-btn {
+      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
+    }
+
+    /* Button Animation */
+    .pulse {
+      animation: pulseEffect 2s infinite;
+    }
+
+    @keyframes pulseEffect {
+      0% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
+      }
+      70% {
+        transform: scale(1.05);
+        box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
+      }
+      100% {
+        transform: scale(1);
+        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
+      }
+    }
+
+    /* Smooth Content Reveal */
+    .fade-in {
+      animation: fadeInUp 2s ease-out;
+    }
+
+    @keyframes fadeInUp {
+      0% {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      100% {
+        transform: translateY(0);
+        opacity: 1;
+      }
     }
   </style>
 </head>
 <body class="font-sans text-white">
-  <!-- Romantic Emoji Background -->
+
+  <!-- Romantic Floating Emojis -->
   <div class="emoji-bg" style="top: 10%; left: 5%;">💘</div>
   <div class="emoji-bg" style="top: 20%; left: 70%;">💖</div>
   <div class="emoji-bg" style="top: 50%; left: 30%;">💕</div>
@@ -40,17 +81,24 @@
   <div class="emoji-bg" style="top: 35%; left: 50%;">❤</div>
 
   <!-- Main Content -->
-  <div class="z-10 relative flex flex-col items-center justify-center h-screen text-center px-4">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-pink-900 drop-shadow-lg mb-4">🥺 তুমি কি আমায় ভালোবাসো? ❤</h1>
-    <div class="text-2xl mb-4 text-pink-800 font-semibold">😍 💌 🥰 ❤ 😊</div>
+  <div class="z-10 relative flex flex-col items-center justify-center h-screen text-center px-4 fade-in">
+    <h1 class="text-4xl md:text-5xl font-extrabold text-pink-900 drop-shadow-lg mb-4 glow-text">
+      🥺 তুমি কি আমায় ভালোবাসো? ❤
+    </h1>
+    <div class="text-2xl mb-6 text-pink-800 font-semibold glow-text">😍 💌 🥰 ❤ 😊</div>
 
     <!-- Buttons -->
     <div class="relative space-x-4 inline-block">
-      <button id="yesBtn" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300">হ্যাঁ</button>
-      <button id="noBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 absolute">না</button>
+      <button id="yesBtn" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 glow-btn pulse">
+        হ্যাঁ
+      </button>
+      <button id="noBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 absolute glow-btn">
+        না
+      </button>
     </div>
   </div>
 
+  <!-- JS to move the "No" button and handle response -->
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
