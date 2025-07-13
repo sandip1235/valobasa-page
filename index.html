@@ -1,64 +1,65 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ভালোবাসা পেজ</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     * {
       box-sizing: border-box;
     }
 
-    body {
+    html, body {
       margin: 0;
       padding: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(135deg, #ffe6f0, #ffeaf7);
+      height: 100%;
       overflow: hidden;
-      height: 100vh;
-      width: 100vw;
+      background: linear-gradient(135deg, #ffe6f0, #ffeaf7);
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .container {
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: relative;
+      height: 100%;
       text-align: center;
+      padding: 1rem;
     }
 
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.8rem;
       color: #cc007a;
-      margin-bottom: 50px;
-      text-shadow: 1px 1px 2px #ffffffaa;
-      animation: popin 1s ease;
-      padding: 0 20px;
+      margin-bottom: 40px;
+      text-shadow: 1px 1px 3px #fff;
     }
 
     .buttons {
+      position: relative;
       display: flex;
-      gap: 20px;
+      gap: 30px;
       flex-wrap: wrap;
       justify-content: center;
-      position: relative;
     }
 
     .btn {
       font-size: 2.5rem;
       padding: 1.2em 2.5em;
       border: none;
-      border-radius: 20px;
+      border-radius: 15px;
       background-color: #ff66b2;
       color: white;
       cursor: pointer;
       box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
       transition: all 0.3s ease;
-      z-index: 2;
       position: relative;
+      z-index: 10;
     }
 
     .btn:hover {
       background-color: #ff3399;
-      transform: scale(1.1);
+      transform: scale(1.08);
     }
 
     .emoji {
@@ -77,36 +78,30 @@
       }
     }
 
-    @keyframes popin {
-      from {
-        transform: scale(0.5);
-        opacity: 0;
-      }
-      to {
-        transform: scale(1);
-        opacity: 1;
-      }
-    }
-
-    @media screen and (max-width: 480px) {
+    @media (max-width: 600px) {
       h1 {
-        font-size: 1.8rem;
+        font-size: 2rem;
       }
 
       .btn {
         font-size: 2rem;
         padding: 1em 2em;
       }
+
+      .buttons {
+        gap: 20px;
+      }
     }
   </style>
 </head>
 <body>
 
-  <h1>তুমি কি আমাকে ভালোবাসো?</h1>
-
-  <div class="buttons">
-    <button class="btn" onclick="startEmojiShower()">হা</button>
-    <button class="btn" id="naBtn" onclick="moveNa()">না</button>
+  <div class="container">
+    <h1>তুমি কি আমাকে ভালোবাসো?</h1>
+    <div class="buttons">
+      <button class="btn" onclick="startEmojiShower()">হা</button>
+      <button class="btn" id="naBtn" onclick="moveNa()">না</button>
+    </div>
   </div>
 
   <script>
@@ -129,7 +124,7 @@
         document.body.appendChild(emoji);
 
         setTimeout(() => emoji.remove(), 6000);
-      }, 200);
+      }, 150);
     }
 
     function moveNa() {
@@ -141,13 +136,8 @@
         return;
       }
 
-      const btnWidth = naBtn.offsetWidth;
-      const btnHeight = naBtn.offsetHeight;
-      const pageWidth = window.innerWidth - btnWidth;
-      const pageHeight = window.innerHeight - btnHeight;
-
-      const randX = Math.random() * pageWidth;
-      const randY = Math.random() * (pageHeight - 100) + 50;
+      const randX = Math.random() * (window.innerWidth - naBtn.offsetWidth);
+      const randY = Math.random() * (window.innerHeight - naBtn.offsetHeight);
 
       naBtn.style.position = 'fixed';
       naBtn.style.left = randX + 'px';
