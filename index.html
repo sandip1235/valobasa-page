@@ -6,18 +6,25 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     body {
-      background: linear-gradient(135deg, #fce4ec, #f8bbd0);
-      background-attachment: fixed;
+      background: linear-gradient(135deg, #ffe0ec, #ffc4dd, #ffd6eb);
+      background-size: 400% 400%;
+      animation: bgFlow 15s ease infinite;
+      font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
     }
 
-    /* Floating Emojis */
+    @keyframes bgFlow {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     .emoji-bg {
       position: fixed;
       z-index: 0;
-      font-size: 3rem;
-      opacity: 0.1;
-      animation: float 20s linear infinite;
+      font-size: 3.5rem;
+      opacity: 0.07;
+      animation: float 25s linear infinite;
     }
 
     @keyframes float {
@@ -25,93 +32,138 @@
       100% { transform: translateY(100vh); }
     }
 
-    /* Soft Glow */
-    .glow-text {
-      text-shadow: 0 0 10px #ff80ab, 0 0 20px #ff4081;
+    .glow {
+      text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4;
     }
 
-    .glow-btn {
-      box-shadow: 0 0 15px rgba(255, 105, 180, 0.6);
-    }
-
-    /* Button Animation */
     .pulse {
       animation: pulseEffect 2s infinite;
     }
 
     @keyframes pulseEffect {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0.4);
-      }
-      70% {
-        transform: scale(1.05);
-        box-shadow: 0 0 0 10px rgba(255, 105, 180, 0);
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 0 0 rgba(255, 105, 180, 0);
-      }
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180,0.5); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 20px rgba(255,105,180,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,105,180,0); }
     }
 
-    /* Smooth Content Reveal */
-    .fade-in {
-      animation: fadeInUp 2s ease-out;
+    /* Heartburst */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      transform: rotate(45deg);
+      animation: burst 1s ease-out forwards;
     }
 
-    @keyframes fadeInUp {
-      0% {
-        transform: translateY(40px);
-        opacity: 0;
-      }
-      100% {
-        transform: translateY(0);
-        opacity: 1;
-      }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: red;
+      border-radius: 50%;
+    }
+
+    .heart::before { top: -10px; left: 0; }
+    .heart::after { top: 0; left: -10px; }
+
+    @keyframes burst {
+      0% { transform: scale(0.5) rotate(45deg); opacity: 1; }
+      100% { transform: scale(2.5) rotate(45deg); opacity: 0; }
+    }
+
+    /* Typewriter */
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 3px solid #ff69b4;
+      animation: typing 4s steps(40, end), blink 0.75s step-end infinite;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    @keyframes blink {
+      50% { border-color: transparent; }
     }
   </style>
 </head>
-<body class="font-sans text-white">
+<body class="text-white">
 
-  <!-- Romantic Floating Emojis -->
-  <div class="emoji-bg" style="top: 10%; left: 5%;">💘</div>
-  <div class="emoji-bg" style="top: 20%; left: 70%;">💖</div>
-  <div class="emoji-bg" style="top: 50%; left: 30%;">💕</div>
-  <div class="emoji-bg" style="top: 80%; left: 80%;">💗</div>
-  <div class="emoji-bg" style="top: 35%; left: 50%;">❤</div>
+  <!-- Background Emojis -->
+  <div class="emoji-bg" style="top: 5%; left: 10%;">💖</div>
+  <div class="emoji-bg" style="top: 20%; left: 80%;">💘</div>
+  <div class="emoji-bg" style="top: 40%; left: 30%;">💕</div>
+  <div class="emoji-bg" style="top: 60%; left: 70%;">💗</div>
+  <div class="emoji-bg" style="top: 75%; left: 20%;">❤</div>
 
-  <!-- Main Content -->
-  <div class="z-10 relative flex flex-col items-center justify-center h-screen text-center px-4 fade-in">
-    <h1 class="text-4xl md:text-5xl font-extrabold text-pink-900 drop-shadow-lg mb-4 glow-text">
-      🥺 তুমি কি আমায় ভালোবাসো? ❤
+  <!-- Content -->
+  <div class="z-10 relative flex flex-col items-center justify-center h-screen text-center px-4">
+    <h1 id="mainText" class="text-5xl md:text-6xl font-extrabold text-pink-900 glow mb-6 typewriter">
+      🥺 তুমি কি আমায় ভালোবাসো? ❤️
     </h1>
-    <div class="text-2xl mb-6 text-pink-800 font-semibold glow-text">😍 💌 🥰 ❤ 😊</div>
+    <p class="text-2xl text-pink-700 font-semibold mb-8 glow">😍 💌 🥰 💖 😊</p>
 
     <!-- Buttons -->
     <div class="relative space-x-4 inline-block">
-      <button id="yesBtn" class="bg-pink-600 hover:bg-pink-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 glow-btn pulse">
+      <button id="yesBtn" class="bg-pink-600 hover:bg-pink-700 text-white font-bold py-3 px-8 rounded-xl transition duration-300 glow pulse">
         হ্যাঁ
       </button>
-      <button id="noBtn" class="bg-red-600 hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition duration-300 absolute glow-btn">
+      <button id="noBtn" class="bg-red-500 hover:bg-red-700 text-white font-bold py-3 px-8 rounded-xl transition duration-300 absolute pulse">
         না
       </button>
     </div>
   </div>
 
-  <!-- JS to move the "No" button and handle response -->
+  <!-- Background Music -->
+  <audio autoplay loop>
+    <source src="https://www.fesliyanstudios.com/play-mp3/387" type="audio/mp3">
+  </audio>
+
+  <!-- Voice Response -->
+  <audio id="voiceLove">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/01/audio_d187f0a5b4.mp3" type="audio/mpeg">
+    <!-- Replace this with Bengali voiceover URL if you have -->
+  </audio>
+
   <script>
     const noBtn = document.getElementById("noBtn");
     const yesBtn = document.getElementById("yesBtn");
+    const voiceLove = document.getElementById("voiceLove");
 
+    let noCounter = 0;
+
+    // Move No button randomly
     noBtn.addEventListener("mouseover", () => {
+      noCounter++;
+      if (noCounter >= 5) {
+        noBtn.style.display = "none";
+        return;
+      }
       const x = Math.random() * (window.innerWidth - 150);
       const y = Math.random() * (window.innerHeight - 100);
       noBtn.style.left = `${x}px`;
       noBtn.style.top = `${y}px`;
     });
 
-    yesBtn.addEventListener("click", () => {
-      alert("আমি তো তোমাকেই ভালোবাসি! ❤️");
+    // Heartburst and Voice on Yes
+    yesBtn.addEventListener("click", (e) => {
+      for (let i = 0; i < 25; i++) {
+        const heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.style.left = `${e.clientX}px`;
+        heart.style.top = `${e.clientY}px`;
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 1000);
+      }
+      voiceLove.play();
+      setTimeout(() => {
+        alert("আমি তো তোমাকেই ভালোবাসি! ❤️");
+      }, 1000);
     });
   </script>
 </body>
